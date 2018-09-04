@@ -2,8 +2,8 @@ package org.usfirst.frc.team1683.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import motor.TalonSRX;
-import sensors.Encoder;
+import org.usfirst.frc.team1683.robot.motor.TalonSRX;
+import org.usfirst.frc.team1683.robot.sensors.Encoder;
 
 public abstract class DriveTrain extends Subsystem {
 

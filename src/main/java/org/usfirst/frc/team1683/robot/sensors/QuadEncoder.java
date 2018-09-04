@@ -1,9 +1,9 @@
-package sensors;
+package org.usfirst.frc.team1683.robot.sensors;
 
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
-import motor.TalonSRX;
+import org.usfirst.frc.team1683.robot.motor.TalonSRX;
 
 /**
  * Encoder class. Used to measure how far the robot traveled

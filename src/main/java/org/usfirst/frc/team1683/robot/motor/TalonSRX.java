@@ -1,11 +1,11 @@
-package motor;
-
+package org.usfirst.frc.team1683.robot.motor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import sensors.Encoder;
+
+import org.usfirst.frc.team1683.robot.sensors.Encoder;
 
 /*
  * Motor control (talonSRX)

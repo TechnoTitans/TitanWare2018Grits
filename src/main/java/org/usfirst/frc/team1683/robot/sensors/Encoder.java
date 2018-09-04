@@ -1,4 +1,4 @@
-package sensors;
+package org.usfirst.frc.team1683.robot.sensors;
 
 public interface Encoder {
 

@@ -1,6 +1,6 @@
-package motor;
+package org.usfirst.frc.team1683.robot.motor;
 
-import sensors.Encoder;
+import org.usfirst.frc.team1683.robot.sensors.Encoder;
 
 public interface Motor {
 

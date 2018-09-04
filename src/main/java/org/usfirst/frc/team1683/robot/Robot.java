@@ -11,12 +11,14 @@ import org.usfirst.frc.team1683.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1683.robot.subsystems.TankDrive;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import motor.TalonSRX;
-import sensors.QuadEncoder;
+
+import org.usfirst.frc.team1683.robot.motor.TalonSRX;
+import org.usfirst.frc.team1683.robot.sensors.*;
+import org.usfirst.frc.team1683.robot.commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,7 +27,7 @@ import sensors.QuadEncoder;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
 	public static final boolean LEFT_REVERSE = false;
 	public static final boolean RIGHT_REVERSE = true;
 	
