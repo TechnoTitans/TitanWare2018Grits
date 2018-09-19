@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 	}
 
-	/**
+	/** 
 	 * This function is called periodically during operator control.
 	 */
 	@Override
