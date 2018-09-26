@@ -18,7 +18,7 @@ public class Turn extends Command {
 
   @Override
   protected void execute() {
-    Robot.drive.turnInPlace(turnAngle > 0, 0.5);
+    Robot.drive.turnInPlace(turnAngle > 0, 0.4);
   }
 
   @Override
