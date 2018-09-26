@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class CommandGroupAlpha extends CommandGroup {
   public CommandGroupAlpha() {
-    addSequential(new Forwards(500));
-    addSequential(new Turn(90));
-    addSequential(new Forwards(250));
-    addSequential(new Turn(-90));
-    addSequential(new Forwards(250));
-    addSequential(new Turn(-90));
-    addSequential(new Forwards(250));
-    addSequential(new Turn(90));
-    addSequential(new Backwards(750));
+    addSequential(new Forwards(5));
+    addSequential(new Turn(90, .5));
+    addSequential(new Forwards(2.5));
+    addSequential(new Turn(-90, .5));
+    addSequential(new Forwards(2.5));
+    addSequential(new Turn(-90, .5));
+    addSequential(new Forwards(2.5));
+    addSequential(new Turn(90, .5));
+    addSequential(new Backwards(4096));
   }
 }
