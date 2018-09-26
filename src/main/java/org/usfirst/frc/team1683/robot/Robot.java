@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team1683.robot;
 
+import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1683.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1683.robot.subsystems.TankDrive;
 
@@ -75,6 +76,8 @@ public class Robot extends TimedRobot {
 		rightFollow2.setupCurrentLimiting();
 		
 		drive = new TankDrive(leftETalonSRX, rightETalonSRX, gyro);
+
+		SmartDashboard.putData((AnalogGyro) gyro);
 	}
 
 	/**
@@ -91,7 +94,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		new Turn(90, 0.5).start();
+		new Turn(90, 0.4).start();
 	}
 
 	/**
@@ -110,6 +113,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		drive.setRight(0.2);
 	}
 
 	/**

@@ -34,15 +34,15 @@ public class Turn extends Command {
     if (speed > turnSpeed) {
       speed = turnSpeed;
     }
-    Robot.drive.turnInPlace(true, speed);
+    Robot.drive.turnInPlace(turnAngle > 0, speed);
   }
 
   @Override
   protected boolean isFinished() {
     if (turnAngle > 0) {
-      return Robot.gyro.getAngle() > turnAngle;
+      return Robot.gyro.getAngle() > turnAngle - (132.7*turnSpeed  - 21);
     } else {
-      return Robot.gyro.getAngle() < turnAngle;
+      return Robot.gyro.getAngle() < turnAngle + (132.7*turnSpeed  - 21);
     }
   }
 
