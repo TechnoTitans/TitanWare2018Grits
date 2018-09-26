@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		new Turn(90).start();
+		new Turn(90, 0.5).start();
 	}
 
 	/**
