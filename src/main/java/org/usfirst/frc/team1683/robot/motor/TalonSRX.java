@@ -59,6 +59,8 @@ public class TalonSRX extends com.ctre.phoenix.motorcontrol.can.TalonSRX impleme
 	 */
 	@Override
 	public void set(double speed) {
+		if (speed > 1) speed = 1;
+		if (speed < -1) speed = -1;
 		super.set(ControlMode.PercentOutput, speed);
 	}
 	
