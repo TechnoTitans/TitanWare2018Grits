@@ -16,7 +16,7 @@ public class PIDTurn extends PIDCommand {
     private double angle;
 
     public PIDTurn (double angle) {
-        super(0.05, 0, 0.18);
+        super(0.051, 0, 0.18);
         this.angle = angle;
         this.setSetpoint(angle);
         this.getPIDController().setOutputRange(-0.4, 0.4);
