@@ -94,9 +94,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
-		Command m = new PIDTurn(90);
-		SmartDashboard.putData(m);
+		new Turn(-90, 0.4).start();
 	}
 
 	/**
@@ -115,7 +113,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		drive.setRight(0.2);
 	}
 
 	/**
