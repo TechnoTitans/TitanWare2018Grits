@@ -43,6 +43,7 @@ public class TeleopDriveTrain extends Command {
 		button 4 = new JoystickButton(rightJoy, 4);
 		button 5 = new JoystickButton(rightJoy, 5);
 		button 6 = new JoystickButton(leftJoy, 6);
+		button 7 = new JoystickButton(leftJoy, 7);
 		
 		button1.whenPressed(new PrepareToGrab());
 		button2.whenPressed(new Grab());
@@ -50,6 +51,7 @@ public class TeleopDriveTrain extends Command {
 		button4.whileHeld(new Raise());
 		button5.whileHeld(new Lower());
 		button6.whileHeld(new Tilt());
+		button7.whileHeld(new Shoot());
 	}
 	
 	
