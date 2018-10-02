@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1683.robot.Robot;
 
 public class Forwards extends Command {
-    private double forwardNum;
+    private double distance;
     private double desiredSpeed;
     private double startSpeed = 0.2;
     private double difference = desiredSpeed - startSpeed;
@@ -18,7 +18,7 @@ public class Forwards extends Command {
     private final double kP = 0.05;
     public Forwards(double forwardNum, double speed) {
         requires(Robot.drive);
-        this.forwardNum = forwardNum;
+        this.distance = forwardNum;
         this.desiredSpeed = speed;
     }
 
@@ -35,7 +35,7 @@ public class Forwards extends Command {
             accelerate = false;
         }
 
-        if (forwardNum - Robot.drive.getLeftEncoder().getDistance() <= distanceToAccelerate){
+        if (distance - Robot.drive.getLeftEncoder().getDistance() <= distanceToAccelerate){
             decelerate = true;
         }
 
@@ -46,9 +46,7 @@ public class Forwards extends Command {
             } else if (decelerate){
                 speed -= speedPerDistance * (difference);
             }
-
             previousEncoder = Robot.drive.getLeftEncoder().getDistance();
-
         }
 
         double error = Robot.gyro.getAngle();
@@ -59,8 +57,8 @@ public class Forwards extends Command {
 
     @Override
     protected boolean isFinished() {
-        return Robot.drive.getLeftEncoder().getDistance() > forwardNum ||
-              Robot.drive.getRightEncoder().getDistance() > forwardNum;
+        return Robot.drive.getLeftEncoder().getDistance() > distance ||
+              Robot.drive.getRightEncoder().getDistance() > distance;
     }
 
     @Override
