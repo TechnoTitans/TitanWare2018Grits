@@ -7,35 +7,70 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1683.robot.Robot;
 
 public class Forwards extends Command {
-  private double forwardNum;
-  public Forwards(double forwardNum) {
-    requires(Robot.drive);
-    this.forwardNum = forwardNum;
-  }
+    private double forwardNum;
+    private double desiredSpeed;
+    private double startSpeed = 0.2;
+    private double difference = desiredSpeed - startSpeed;
+    private double speed = startSpeed;
+    private double speedPerDistance = 1/10;
+    private boolean accelerate = true;
+    private boolean decelerate = false;
+    private final double kP = 0.05;
+    public Forwards(double forwardNum, double speed) {
+        requires(Robot.drive);
+        this.forwardNum = forwardNum;
+        this.desiredSpeed = speed;
+    }
 
-  @Override
-  protected void initialize() {
-    Robot.gyro.reset();
-    Robot.drive.resetEncoders();
-  }
+    @Override
+    protected void initialize() {
+        Robot.gyro.reset();
+        Robot.drive.resetEncoders();
+    }
+    private double previousEncoder = Robot.drive.getLeftEncoder().getDistance();
+    private double distanceToAccelerate = 0;
+    @Override
+    protected void execute() {
+        if (speed >= desiredSpeed){
+            accelerate = false;
+        }
 
-  @Override
-  protected void execute() {
-    Robot.drive.set(0.5, 0.5);
-  }
+        if (forwardNum - Robot.drive.getLeftEncoder().getDistance() <= distanceToAccelerate){
+            decelerate = true;
+        }
 
-  @Override
-  protected boolean isFinished() {
-    return Robot.drive.getLeftEncoder().getDistance() > forwardNum;
-  }
+        if (Robot.drive.getLeftEncoder().getDistance() - previousEncoder >= 1){
+            if (accelerate){
+                speed += speedPerDistance * (difference);
+                distanceToAccelerate += 1;
+            } else if (decelerate){
+                speed -= speedPerDistance * (difference);
+            }
 
-  @Override
-  protected void end() {
-    Robot.drive.stop();
-  }
+            previousEncoder = Robot.drive.getLeftEncoder().getDistance();
 
-  @Override
-  protected void interrupted() {
-    end();
-  }
+        }
+
+        double error = Robot.gyro.getAngle();
+        error *= kP;
+        Robot.drive.set(speed - error, speed + error);
+
+    }
+
+    @Override
+    protected boolean isFinished() {
+        return Robot.drive.getLeftEncoder().getDistance() > forwardNum ||
+              Robot.drive.getRightEncoder().getDistance() > forwardNum;
+    }
+
+    @Override
+    protected void end() {
+        Robot.drive.stop();
+        decelerate = false;
+    }
+
+    @Override
+    protected void interrupted() {
+      end();
+    }
 }
