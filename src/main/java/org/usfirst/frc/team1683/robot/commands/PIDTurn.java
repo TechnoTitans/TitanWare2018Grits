@@ -4,16 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1683.robot.Robot;
+import org.usfirst.frc.team1683.robot.motor.Filter;
 
 public class PIDTurn extends PIDCommand {
-
-    private double kP = 0.05;
-    private double kI = 0;
-    private double kD = 0.3;
-    private double previousError = 0;
-    private double currentError = 0;
-    private double integralError = 0;
     private double angle;
+    private Filter filter = new Filter(0.0001);
 
     public PIDTurn (double angle) {
         super(0.051, 0, 0.18);
@@ -25,14 +20,7 @@ public class PIDTurn extends PIDCommand {
     public void initialize() {
         Robot.gyro.reset();
     }
-//
-//    public void execute(){
-//        double currentAngle = Robot.gyro.getAngle();
-//        currentError = angle - currentAngle;
-//        integralError += currentError;
-//        previousError = currentError;
-//
-//    }
+
 
     @Override
     protected boolean isFinished() {
@@ -54,6 +42,7 @@ public class PIDTurn extends PIDCommand {
     @Override
     protected void usePIDOutput(double output) {
         if (output < 0 && angle > 0 || output > 0 && angle < 0) output = 0;
-        Robot.drive.set(output, -output);
+        filter.update(output);
+        Robot.drive.set(filter.getValue(), -filter.getValue());
     }
 }
