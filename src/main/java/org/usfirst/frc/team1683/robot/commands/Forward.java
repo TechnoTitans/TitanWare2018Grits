@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team1683.robot.Robot;
 
-public class Forwards extends Command {
+public class Forward extends Command {
     private double distance;
     private double desiredSpeed;
     private double startSpeed = 0.2;
@@ -16,7 +16,7 @@ public class Forwards extends Command {
     private boolean accelerate = true;
     private boolean decelerate = false;
     private final double kP = 0.05;
-    public Forwards(double forwardNum, double speed) {
+    public Forward(double forwardNum, double speed) {
         requires(Robot.drive);
         this.distance = forwardNum;
         this.desiredSpeed = speed;
@@ -28,7 +28,7 @@ public class Forwards extends Command {
         Robot.drive.resetEncoders();
     }
     private double previousEncoder = Robot.drive.getLeftEncoder().getDistance();
-    private double distanceToAccelerate = 0;
+    private double distanceToAccelerate = 0; //number of ticks to increase to maximum speed
     @Override
     protected void execute() {
         if (speed >= desiredSpeed){
@@ -65,6 +65,7 @@ public class Forwards extends Command {
     protected void end() {
         Robot.drive.stop();
         decelerate = false;
+        accelerate = true;
     }
 
     @Override
