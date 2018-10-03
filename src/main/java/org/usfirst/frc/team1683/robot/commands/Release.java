@@ -1,5 +1,16 @@
 package org.usfirst.frc.team1683.robot.commands;
 
-public class Release execute{
+import edu.wpi.first.wpilibj.command.Command;
+
+public class Release extends Command {
+	public void execute() {
+		
+	}
+
+	@Override
+	protected boolean isFinished() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

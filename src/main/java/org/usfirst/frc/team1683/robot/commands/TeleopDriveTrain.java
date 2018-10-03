@@ -4,7 +4,6 @@ import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.Robot;
 import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -25,7 +24,8 @@ public class TeleopDriveTrain extends Command {
 		button6 = new JoystickButton(leftJoystick, 6);
 		
 		public void OI(TalonSRX left, TalonSRX right, TalonSRX tilt) {
-		button1.whenPressed(new Grab());
+		button1.whenPressed(new Grab(Grabber));
+		button2.whileHeld(new Tilt(Grabber));
 
 		}
 	
