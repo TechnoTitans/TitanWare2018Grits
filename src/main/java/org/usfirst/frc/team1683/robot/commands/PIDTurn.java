@@ -9,12 +9,15 @@ import org.usfirst.frc.team1683.robot.motor.Filter;
 public class PIDTurn extends PIDCommand {
     private double angle;
     private Filter filter = new Filter(0.0001);
-
-    public PIDTurn (double angle) {
+    public PIDTurn(double angle) {
+        this(angle, 0.4);
+    }
+    
+    public PIDTurn (double angle, double speed) {
         super(0.051, 0, 0.18);
         this.angle = angle;
         this.setSetpoint(angle);
-        this.getPIDController().setOutputRange(-0.4, 0.4);
+        this.getPIDController().setOutputRange(-speed, speed);
     }
 
     public void initialize() {

@@ -10,12 +10,14 @@ public class Forward extends Command {
     private double distance;
     private double desiredSpeed;
     private double startSpeed = 0.2;
-    private double difference = desiredSpeed - startSpeed;
+    // private double difference = desiredSpeed - startSpeed;
     private double speed = startSpeed;
-    private double speedPerDistance = 1/10;
+    private double speedPerDistance = 0.05;
     private boolean accelerate = true;
     private boolean decelerate = false;
-    private final double kP = 0.05;
+    private final double kP = 0.05; // error for angle
+    private double previousEncoder = 0;
+
     public Forward(double forwardNum, double speed) {
         requires(Robot.drive);
         this.distance = forwardNum;
@@ -27,7 +29,7 @@ public class Forward extends Command {
         Robot.gyro.reset();
         Robot.drive.resetEncoders();
     }
-    private double previousEncoder = Robot.drive.getLeftEncoder().getDistance();
+
     private double distanceToAccelerate = 0; //number of ticks to increase to maximum speed
     @Override
     protected void execute() {
@@ -35,24 +37,23 @@ public class Forward extends Command {
             accelerate = false;
         }
 
+        double delta = Robot.drive.getLeftEncoder().getDistance() - previousEncoder;
         if (distance - Robot.drive.getLeftEncoder().getDistance() <= distanceToAccelerate){
             decelerate = true;
         }
 
-        if (Robot.drive.getLeftEncoder().getDistance() - previousEncoder >= 1){
-            if (accelerate){
-                speed += speedPerDistance * (difference);
-                distanceToAccelerate += 1;
-            } else if (decelerate){
-                speed -= speedPerDistance * (difference);
-            }
-            previousEncoder = Robot.drive.getLeftEncoder().getDistance();
+        if (decelerate) {
+            speed -= speedPerDistance * delta;
+        } else if (accelerate){
+            speed += speedPerDistance * delta;
+            distanceToAccelerate += delta;
         }
+        previousEncoder = Robot.drive.getLeftEncoder().getDistance();
+    
 
         double error = Robot.gyro.getAngle();
         error *= kP;
         Robot.drive.set(speed - error, speed + error);
-
     }
 
     @Override
