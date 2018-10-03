@@ -13,7 +13,7 @@ public class Grabber extends Subsystem {
 		this.left = left;
 		this.right = right;
 	}
-	
+
 	public void moveIn(double speed) {
 		set(-speed);
 	}
@@ -26,9 +26,9 @@ public class Grabber extends Subsystem {
 		left.set(speed);
 		right.set(-speed);
 	}
-	
-	public void tilt(double leftSpeed, double rightSpeed) {
-		set(leftSpeed, rightSpeed);
+//	Speed positive on motor makes grabber lift up and vice versa
+	public void tilt(double speed) {
+		set(speed);
 	}
 	
 	@Override

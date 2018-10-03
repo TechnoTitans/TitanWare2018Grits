@@ -2,22 +2,20 @@ package org.usfirst.frc.team1683.robot.commands;
 
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.Robot;
+import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team1683.robot.motor.TalonSRX;
 
 public class TeleopDriveTrain extends Command {
 	private Joystick leftJoystick = new Joystick(HWR.LEFT_JOYSTICK);
 	private Joystick rightJoystick = new Joystick(HWR.RIGHT_JOYSTICK);
 		public void execute() {
-		leftJoystick.getX(Hand.kLeft);
-		rightJoystick.getY(Hand.kRight);
-		leftJoystick.getZ();
-		rightJoystick.getZ();
-		Robot.drive.set(0.5,0.5);
+		Robot.drive.set(leftJoystick.getY(), rightJoystick.getY());
 		}
 		Button button1 = new JoystickButton(leftJoystick, 1),
 		button2 = new JoystickButton(leftJoystick, 2),
@@ -26,10 +24,9 @@ public class TeleopDriveTrain extends Command {
 		button5 = new JoystickButton(rightJoystick, 5),
 		button6 = new JoystickButton(leftJoystick, 6);
 		
-		public void OI() {
-		button4.whileHeld(new Raise());
-		button5.whileHeld(new Lower());
-		button6.whileHeld(new Tilt());
+		public void OI(TalonSRX left, TalonSRX right, TalonSRX tilt) {
+		button1.whenPressed(new Grab());
+
 		}
 	
 		
