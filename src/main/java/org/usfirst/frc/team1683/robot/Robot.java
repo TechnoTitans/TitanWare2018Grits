@@ -9,6 +9,7 @@ package org.usfirst.frc.team1683.robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1683.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 import org.usfirst.frc.team1683.robot.subsystems.TankDrive;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -35,9 +36,10 @@ public class Robot extends TimedRobot {
 	public static Gyro gyro;
 	
 	public static TalonSRX grabberLeft, grabberRight, elevatorTalon,
-		leftETalonSRX, rightETalonSRX;
-	
+		leftETalonSRX, rightETalonSRX, grabberTilt;
+
 	public static DriveTrain drive;
+	public static Grabber grabber;
 	
 	private static final double INCHES_PER_PULSE = 1; // configure
 	
@@ -51,6 +53,7 @@ public class Robot extends TimedRobot {
 		
 		grabberLeft = new TalonSRX(HWR.GRABBER_LEFT, false);
 		grabberRight = new TalonSRX(HWR.GRABBER_RIGHT, false);
+		grabberTilt = new TalonSRX(HWR.GRABBER_TILT, false);
 		elevatorTalon = new TalonSRX(HWR.ELEVATOR_MAIN, false);
 		elevatorTalon.setEncoder(new QuadEncoder(elevatorTalon, 0.00112, true));
 		leftETalonSRX = new TalonSRX(HWR.LEFT_DRIVE_TRAIN_FRONT, LEFT_REVERSE);
@@ -76,6 +79,7 @@ public class Robot extends TimedRobot {
 		rightFollow2.setupCurrentLimiting();
 		
 		drive = new TankDrive(leftETalonSRX, rightETalonSRX, gyro);
+		grabber = new Grabber(grabberLeft, grabberRight, grabberTilt);
 
 		SmartDashboard.putData((AnalogGyro) gyro);
 	}
@@ -94,7 +98,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		new Turn(-90, 0.4).start();
+		
 	}
 
 	/**

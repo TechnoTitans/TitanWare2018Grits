@@ -28,6 +28,7 @@ public class HWR {
 	//Flywheels
 	public static final int GRABBER_LEFT = HWP.CAN_7;
 	public static final int GRABBER_RIGHT = HWP.CAN_9;
+	public static final int GRABBER_TILT = HWP.CAN_6;
 
 	// Sensors
 	public static final int GYRO = HWP.ANALOG_1;
