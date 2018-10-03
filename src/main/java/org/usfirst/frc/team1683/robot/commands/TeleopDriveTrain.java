@@ -24,8 +24,7 @@ public class TeleopDriveTrain extends Command {
 		button6 = new JoystickButton(leftJoystick, 6);
 		
 		public void OI(TalonSRX left, TalonSRX right, TalonSRX tilt) {
-		button1.whenPressed(new Grab(Grabber));
-		button2.whileHeld(new Tilt(Grabber));
+
 
 		}
 	
