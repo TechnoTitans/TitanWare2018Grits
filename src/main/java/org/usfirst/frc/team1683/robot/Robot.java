@@ -98,9 +98,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		Forward f = new Forward(100, 0.4, 0.05);
-		SmartDashboard.putData(f);
-		f.start();
+		Command alpha = new CommandGroupAlpha();
+		SmartDashboard.putData(alpha);
+		alpha.start();
 	}
 
 	/**

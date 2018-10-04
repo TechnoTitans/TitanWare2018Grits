@@ -35,7 +35,8 @@ public class Forward extends Command {
     private double distanceToAccelerate = 0; //number of ticks to increase to maximum speed
     @Override
     protected void execute() {
-        if (speed >= desiredSpeed){
+        speed = desiredSpeed;
+        /*if (speed >= desiredSpeed){
             accelerate = false;
         }
 
@@ -50,7 +51,7 @@ public class Forward extends Command {
             speed += speedPerDistance * delta;
             distanceToAccelerate += delta;
         }
-        previousEncoder = Robot.drive.getLeftEncoder().getDistance();
+        previousEncoder = Robot.drive.getLeftEncoder().getDistance();*/
         SmartDashboard.putNumber("Speed", speed);
         double error = Robot.gyro.getAngle();
         error *= kP;
