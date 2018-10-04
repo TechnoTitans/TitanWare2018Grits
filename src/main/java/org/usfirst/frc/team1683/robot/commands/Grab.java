@@ -4,8 +4,15 @@ import org.usfirst.frc.team1683.robot.Robot;
 import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
-public class Grab extends Command {
+public class Grab extends TimedCommand {
+	public Grab() {
+		super(1);
+		requires(Robot.grabber);
+	}
+
+
 	public void execute() {
 		Robot.grabber.moveIn(0.5);
 	}
@@ -13,7 +20,7 @@ public class Grab extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		return isTimedOut();
 	}
+	
 }

@@ -7,6 +7,7 @@
 package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1683.robot.subsystems.Elevator;
 import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 import org.usfirst.frc.team1683.robot.subsystems.TankDrive;
 
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
 
 	public static DriveTrain drive;
 	public static Grabber grabber;
+	public static Elevator elevator;
 	
 	private static final double INCHES_PER_PULSE = 1; // configure
 	
@@ -79,6 +81,7 @@ public class Robot extends TimedRobot {
 		
 		drive = new TankDrive(leftETalonSRX, rightETalonSRX, gyro);
 		grabber = new Grabber(grabberLeft, grabberRight, grabberTilt);
+		elevator = new Elevator(elevatorTalon);
 	}
 
 	/**
