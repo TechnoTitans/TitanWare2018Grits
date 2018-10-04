@@ -21,8 +21,8 @@ public class TeleopDriveTrain extends Command {
 	Button button1 = new JoystickButton(leftJoystick,1),
 		   button2 = new JoystickButton(leftJoystick,2),
 		   button3 = new JoystickButton(rightJoystick, 3),
-	       button4 = new JoystickButton(rightJoystick, 4),
-	       button5 = new JoystickButton(rightJoystick, 5),
+	       button4 = new JoystickButton(auxJoystick, 4),
+	       button5 = new JoystickButton(auxJoystick, 5),
 	       button6 = new JoystickButton(leftJoystick,6);
 	public TeleopDriveTrain() {
 		button4.whenPressed(new Grab());
