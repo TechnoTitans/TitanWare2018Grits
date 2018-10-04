@@ -4,7 +4,6 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.subsystems.DriveTrain;
@@ -34,9 +33,10 @@ public class Robot extends TimedRobot {
 	
 	public static Gyro gyro;
 	
-	public static TalonSRX grabberLeft, grabberRight, grabberTilt, elevatorTalon,
-		leftETalonSRX, rightETalonSRX;
-	
+
+	public static TalonSRX grabberLeft, grabberRight, elevatorTalon,
+		leftETalonSRX, rightETalonSRX, grabberTilt;
+
 	public static DriveTrain drive;
 	public static Grabber grabber;
 	
@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 	}
 
-	/**
+	/** 
 	 * This function is called periodically during operator control.
 	 */
 	@Override
