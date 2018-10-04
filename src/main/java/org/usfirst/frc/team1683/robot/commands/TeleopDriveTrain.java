@@ -15,7 +15,7 @@ public class TeleopDriveTrain extends Command {
 	private Joystick auxJoystick = new Joystick(HWR.AUX_JOYSTICK);
 	public void execute() {
 			Robot.drive.set(leftJoystick.getY(), rightJoystick.getY());
-			Robot.elevator.moveUp(auxJoystick.getY());
+			Robot.elevator.moveUp(-auxJoystick.getY());
 	}
 
 	Button button1 = new JoystickButton(leftJoystick,1),
