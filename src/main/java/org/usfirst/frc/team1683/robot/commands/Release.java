@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Release extends Command {
 	public void execute() {
-		Robot.grabberRight.set(0.5);
+		Robot.grabber.moveOut(0.5);
 	}
 
 	@Override

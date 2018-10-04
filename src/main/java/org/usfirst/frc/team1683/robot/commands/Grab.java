@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Grab extends Command {
 	public void execute() {
-		Robot.grabberLeft.set(0.5);
-		Robot.grabberRight.set(0.5);
+		Robot.grabber.moveIn(0.5);
 	}
 	
 

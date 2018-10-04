@@ -22,7 +22,10 @@ public class TeleopDriveTrain extends Command {
 	       button4 = new JoystickButton(rightJoystick, 4),
 	       button5 = new JoystickButton(rightJoystick, 5),
 	       button6 = new JoystickButton(leftJoystick,6);
-
+	public TeleopDriveTrain() {
+		button1.whenPressed(new Grab());
+		button2.whenPressed(new Release());
+	}
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
