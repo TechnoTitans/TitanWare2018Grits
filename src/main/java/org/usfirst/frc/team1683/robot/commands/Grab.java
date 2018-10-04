@@ -17,6 +17,9 @@ public class Grab extends TimedCommand {
 		Robot.grabber.moveIn(0.5);
 	}
 	
+	public void end() {
+		Robot.grabber.set(0);
+	}
 
 	@Override
 	protected boolean isFinished() {

@@ -15,6 +15,10 @@ public class Release extends TimedCommand {
 		Robot.grabber.moveOut(0.5);
 	}
 
+	public void end() {
+		Robot.grabber.set(0);
+	}
+
 	@Override
 	protected boolean isFinished() {
 		return isTimedOut();
