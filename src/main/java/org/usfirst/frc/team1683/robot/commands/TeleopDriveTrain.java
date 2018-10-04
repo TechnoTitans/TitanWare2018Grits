@@ -13,7 +13,7 @@ public class TeleopDriveTrain extends Command {
 	private Joystick leftJoystick = new Joystick(HWR.LEFT_JOYSTICK);
 	private Joystick rightJoystick = new Joystick(HWR.RIGHT_JOYSTICK);
 	public void execute() {
-		Robot.drive.set(leftJoystick.getY(), rightJoystick.getY());
+		Robot.drive.set(-leftJoystick.getY(), -rightJoystick.getY());
 	}
 	
 	Button button1 = new JoystickButton(leftJoystick,1),

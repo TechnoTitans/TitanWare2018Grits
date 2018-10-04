@@ -3,6 +3,7 @@
 package org.usfirst.frc.team1683.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1683.robot.Robot;
 
@@ -18,10 +19,11 @@ public class Forward extends Command {
     private final double kP = 0.05; // error for angle
     private double previousEncoder = 0;
 
-    public Forward(double forwardNum, double speed) {
+    public Forward(double forwardNum, double speed, double acceleration) {
         requires(Robot.drive);
         this.distance = forwardNum;
         this.desiredSpeed = speed;
+        this.speedPerDistance = acceleration;
     }
 
     @Override
@@ -49,10 +51,10 @@ public class Forward extends Command {
             distanceToAccelerate += delta;
         }
         previousEncoder = Robot.drive.getLeftEncoder().getDistance();
-    
-
+        SmartDashboard.putNumber("Speed", speed);
         double error = Robot.gyro.getAngle();
         error *= kP;
+        SmartDashboard.putNumber("Error", error);
         Robot.drive.set(speed - error, speed + error);
     }
 

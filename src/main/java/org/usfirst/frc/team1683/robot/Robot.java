@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
 	public static DriveTrain drive;
 	public static Grabber grabber;
 	
-	private static final double INCHES_PER_PULSE = 1; // configure
+	private static final double INCHES_PER_PULSE = 0.00475; // configure
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -98,7 +98,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
+		Forward f = new Forward(100, 0.4, 0.05);
+		SmartDashboard.putData(f);
+		f.start();
 	}
 
 	/**
@@ -113,10 +115,14 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 		SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoder().getDistance());
 		SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoder().getDistance());
+		SmartDashboard.putNumber("Left Encoder Speed", drive.getLeftEncoder().getSpeed());
+		SmartDashboard.putNumber("Right Encoder Speed", drive.getRightEncoder().getSpeed());
 	}
 
 	@Override
 	public void teleopInit() {
+		Robot.drive.resetEncoders();
+		new TeleopDriveTrain().start();
 	}
 
 	/**
