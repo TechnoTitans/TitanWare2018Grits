@@ -25,7 +25,6 @@ public class TeleopDriveTrain extends Command {
 		
 		public void OI(TalonSRX left, TalonSRX right, TalonSRX tilt) {
 
-
 		}
 	
 		
