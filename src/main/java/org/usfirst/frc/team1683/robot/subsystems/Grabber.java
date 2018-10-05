@@ -1,5 +1,5 @@
 package org.usfirst.frc.team1683.robot.subsystems;
-
+	
 import org.usfirst.frc.team1683.robot.motor.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,7 +22,7 @@ public class Grabber extends Subsystem{
    }
    public void set(double speed) {
 	   left.set(speed);
-	   right.set(speed);
+	   right.set(-speed);
    }
    
    

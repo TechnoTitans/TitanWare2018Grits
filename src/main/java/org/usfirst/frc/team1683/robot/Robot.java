@@ -4,10 +4,8 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team1683.robot;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1683.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 import org.usfirst.frc.team1683.robot.subsystems.TankDrive;
@@ -40,6 +38,7 @@ public class Robot extends TimedRobot {
 
 	public static DriveTrain drive;
 	public static Grabber grabber;
+	public static Elevator elevator;
 	
 	private static final double INCHES_PER_PULSE = 0.00475; // configure
 	
@@ -80,6 +79,7 @@ public class Robot extends TimedRobot {
 		
 		drive = new TankDrive(leftETalonSRX, rightETalonSRX, gyro);
 		grabber = new Grabber(grabberLeft, grabberRight, grabberTilt);
+		elevator = new Elevator(elevatorTalon);
 
 		SmartDashboard.putData((AnalogGyro) gyro);
 	}
@@ -115,17 +115,14 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 		SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoder().getDistance());
 		SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoder().getDistance());
-		SmartDashboard.putNumber("Left Encoder Speed", drive.getLeftEncoder().getSpeed());
-		SmartDashboard.putNumber("Right Encoder Speed", drive.getRightEncoder().getSpeed());
 	}
 
 	@Override
 	public void teleopInit() {
-		Robot.drive.resetEncoders();
 		new TeleopDriveTrain().start();
 	}
 
-	/**
+	/** 
 	 * This function is called periodically during operator control.
 	 */
 	@Override
