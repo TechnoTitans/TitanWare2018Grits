@@ -22,7 +22,7 @@ public class Grabber extends Subsystem{
    }
    public void set(double speed) {
 	   left.set(speed);
-	   right.set(speed);
+	   right.set(-speed);
    }
    
    
