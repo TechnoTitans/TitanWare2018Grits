@@ -22,6 +22,9 @@ public class Forward extends Command {
 
     private Timer minTime;
 
+    private double encDiff;
+    private double lastEnc;
+
     public Forward(double forwardNum, double speed, double acceleration) {
         requires(Robot.drive);
         this.distance = forwardNum;
@@ -32,6 +35,7 @@ public class Forward extends Command {
 
     public Forward(double forwardNum, double speed) {
         this(forwardNum, speed, 0);
+        this.setInterruptible(true);
 	}
 
 	@Override
@@ -41,6 +45,7 @@ public class Forward extends Command {
         SmartDashboard.putNumber("Started forward", distance);
         SmartDashboard.putBoolean("Is finished?", isFinished());
         minTime.start();
+
     }
 
     private double distanceToAccelerate = 0; //number of ticks to increase to maximum speed
@@ -63,17 +68,17 @@ public class Forward extends Command {
             distanceToAccelerate += delta;
         }
         previousEncoder = Robot.drive.getLeftEncoder().getDistance();*/
-        SmartDashboard.putNumber("Speed", speed);
         double error = Robot.gyro.getAngle();
         error *= kP;
-        SmartDashboard.putNumber("Error", error);
         Robot.drive.set(speed - error, speed + error);
     }
 
     @Override
     protected boolean isFinished() {
+        double speed = Robot.drive.getLeftEncoder().getSpeed();
+        SmartDashboard.putNumber("Encoder speed", speed);
         return minTime.get() > 0.2 && (Robot.drive.getLeftEncoder().getDistance() > distance ||
-              Robot.drive.getRightEncoder().getDistance() > distance);
+              Robot.drive.getRightEncoder().getDistance() > distance || speed < 0.5);
     }
 
     @Override
@@ -87,4 +92,6 @@ public class Forward extends Command {
     protected void interrupted() {
       end();
     }
+
+    
 }

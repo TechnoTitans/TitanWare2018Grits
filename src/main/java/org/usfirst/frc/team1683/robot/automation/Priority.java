@@ -9,21 +9,15 @@ import java.util.Map;
 
 import org.usfirst.frc.team1683.robot.commands.Forward;
 import org.usfirst.frc.team1683.robot.commands.MiddleSwitch;
+import org.usfirst.frc.team1683.robot.commands.OppositeSwitch;
 import org.usfirst.frc.team1683.robot.commands.Switch;
 
 public class Priority {
     String gameData;
 
-    public Character start_side;
+    public char start_side;
 
     private Command todo;
-
-    boolean go_to_same_switch = false;
-    boolean go_to_same_scale = false;
-    boolean go_to_opp_switch = false;
-    boolean go_to_opp_scale = false;
-    boolean go_to_right_switch = false;
-    boolean go_to_left_switch = false;
 
     private Target[] switches_and_sides;
 
@@ -85,15 +79,16 @@ public class Priority {
         } else if (priority == Target.SAME_SCALE) {
             todo = new Forward(120, 0.5);
         } else if (priority == Target.OPP_SWITCH){
-            todo = new Forward(120, 0.5);
+            todo = new OppositeSwitch(start_side == 'R');
         } else if (priority == Target.OPP_SCALE){
             todo = new Forward(120, 0.5);
         } else if (priority == Target.RIGHT_SWITCH){
             todo = new MiddleSwitch(true);
         } else if (priority == Target.LEFT_SWITCH){
             todo = new MiddleSwitch(false);
+        } else {
+            todo = new Forward(120, 0.5);
         }
-        todo = new Forward(120, 0.5);
     }
 
 

@@ -9,9 +9,10 @@ import org.usfirst.frc.team1683.robot.Robot;
 
 public class Turn extends Command {
   private final double increasePerDegree = .005;
-  private final double minSpeed = .2;
+  private final double minSpeed = .35;
   private double turnSpeed;
   private double turnAngle;
+
   public Turn(double turnAngle, double turnSpeed) {
     requires(Robot.drive);
     this.turnAngle = turnAngle;
@@ -31,6 +32,8 @@ public class Turn extends Command {
   protected void execute() {
     double speed;
     double gyro = Math.abs(Robot.gyro.getAngle());
+    SmartDashboard.putNumber("Turn gyro (abs)", gyro);
+    SmartDashboard.putNumber("Target angle", getTargetAngle());
     if (gyro < Math.abs(getTargetAngle()/2)) {
       speed = minSpeed + increasePerDegree * gyro;
     } else {
@@ -45,6 +48,7 @@ public class Turn extends Command {
 
   @Override
   protected boolean isFinished() {
+    if (timeSinceInitialized() < 0.2) return false;
     if (turnAngle > 0) {
       return Robot.gyro.getAngle() > getTargetAngle();
     } else {

@@ -47,6 +47,8 @@ public class Robot extends TimedRobot {
 	public static Grabber grabber;
 	public static Elevator elevator;
 
+	private Command autoCommand;
+
 	private SendableChooser<Object> autoChooser;
 	
 	private static final double INCHES_PER_PULSE = 0.00475; // configure
@@ -111,6 +113,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		if (autoCommand != null && !autoCommand.isCanceled()) autoCommand.cancel();
 	}
 
 	/**
@@ -118,15 +121,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		new Switch(false).start();
 		Object o = autoChooser.getSelected();
-		if (o instanceof Forward) {
-			Command c = (Command) o;
-			c.start();
+		if (o instanceof Command) {
+			autoCommand = (Command) o;
+		} else {
+			autoCommand = ((Priority) o).getTodo();
 		}
-		else if (o instanceof Priority) {
-			Priority p = (Priority) o;
-			p.getTodo().start();
-		}
+		autoCommand.start();
 
 	}
 
@@ -135,9 +137,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		// Before we used Command.runAllCommands(); This is the wpilib equivalent
 		Scheduler.getInstance().run();
 		
+
+		SmartDashboard.putNumber("Right sent", Robot.drive.getRight().getPercentSpeed());
+		SmartDashboard.putNumber("Left sent", Robot.drive.getLeft().getPercentSpeed());
 		// debug
 		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 		SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoder().getDistance());
@@ -156,6 +160,9 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
+
+		SmartDashboard.putNumber("Right sent", Robot.drive.getRight().getPercentSpeed());
+		SmartDashboard.putNumber("Left sent", Robot.drive.getLeft().getPercentSpeed());
 
 		// debug
 		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
