@@ -2,6 +2,7 @@
 
 package org.usfirst.frc.team1683.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,17 +20,27 @@ public class Forward extends Command {
     private final double kP = 0.05; // error for angle
     private double previousEncoder = 0;
 
+    private Timer minTime;
+
     public Forward(double forwardNum, double speed, double acceleration) {
         requires(Robot.drive);
         this.distance = forwardNum;
         this.desiredSpeed = speed;
         this.speedPerDistance = acceleration;
+        minTime = new Timer();
     }
 
-    @Override
+    public Forward(double forwardNum, double speed) {
+        this(forwardNum, speed, 0);
+	}
+
+	@Override
     protected void initialize() {
         Robot.gyro.reset();
         Robot.drive.resetEncoders();
+        SmartDashboard.putNumber("Started forward", distance);
+        SmartDashboard.putBoolean("Is finished?", isFinished());
+        minTime.start();
     }
 
     private double distanceToAccelerate = 0; //number of ticks to increase to maximum speed
@@ -61,8 +72,8 @@ public class Forward extends Command {
 
     @Override
     protected boolean isFinished() {
-        return Robot.drive.getLeftEncoder().getDistance() > distance ||
-              Robot.drive.getRightEncoder().getDistance() > distance;
+        return minTime.get() > 0.2 && (Robot.drive.getLeftEncoder().getDistance() > distance ||
+              Robot.drive.getRightEncoder().getDistance() > distance);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class Turn extends Command {
   }
 
   private double getTargetAngle() {
-    return turnAngle - Math.signum(turnAngle) * (50*turnSpeed);
+    return turnAngle - Math.signum(turnAngle) * (30*turnSpeed);
   }
 
   @Override

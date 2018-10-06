@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot.subsystems;
 	
+import org.usfirst.frc.team1683.robot.Robot;
 import org.usfirst.frc.team1683.robot.motor.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,6 +22,7 @@ public class Grabber extends Subsystem{
 	   set(speed);
    }
    public void set(double speed) {
+    //  if (!Robot.limitSwitchBottom.get()) return;
 	   left.set(speed);
 	   right.set(-speed);
    }

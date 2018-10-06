@@ -1,14 +1,22 @@
 package org.usfirst.frc.team1683.robot.automation;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.usfirst.frc.team1683.robot.commands.Forward;
+import org.usfirst.frc.team1683.robot.commands.MiddleSwitch;
+import org.usfirst.frc.team1683.robot.commands.Switch;
 
 public class Priority {
     String gameData;
 
     public Character start_side;
+
+    private Command todo;
 
     boolean go_to_same_switch = false;
     boolean go_to_same_scale = false;
@@ -17,17 +25,15 @@ public class Priority {
     boolean go_to_right_switch = false;
     boolean go_to_left_switch = false;
 
-    enum Target {
-        SAME_SWITCH,
-        SAME_SCALE,
-        OPP_SWITCH,
-        OPP_SCALE,
-        RIGHT_SWITCH,
-        LEFT_SWITCH,
-    }
+    private Target[] switches_and_sides;
 
     public Priority(Target[] switches_and_sides, char start_side){
         this.start_side = start_side;
+        this.switches_and_sides = switches_and_sides;
+        
+    }
+
+    public Command getTodo() {
         gameData = DriverStation.getInstance().getGameSpecificMessage();
 
         if (start_side == 'L' || start_side == 'R'){
@@ -53,7 +59,7 @@ public class Priority {
                 firstAction(Target.LEFT_SWITCH);
             }
         }
-
+        return todo;
     }
 
     public boolean check_side_scale(){
@@ -73,19 +79,21 @@ public class Priority {
     }
 
     public void firstAction(Target priority){
+        SmartDashboard.putString("Auto priority", priority.toString());
         if (priority == Target.SAME_SWITCH){
-            go_to_same_switch = true;
-        } else if (priority == Target.SAME_SCALE){
-            go_to_same_scale = true;
+            todo = new Switch(start_side == 'R');
+        } else if (priority == Target.SAME_SCALE) {
+            todo = new Forward(120, 0.5);
         } else if (priority == Target.OPP_SWITCH){
-            go_to_opp_switch = true;
+            todo = new Forward(120, 0.5);
         } else if (priority == Target.OPP_SCALE){
-            go_to_opp_scale = true;
+            todo = new Forward(120, 0.5);
         } else if (priority == Target.RIGHT_SWITCH){
-            go_to_right_switch = true;
+            todo = new MiddleSwitch(true);
         } else if (priority == Target.LEFT_SWITCH){
-            go_to_left_switch = true;
+            todo = new MiddleSwitch(false);
         }
+        todo = new Forward(120, 0.5);
     }
 
 

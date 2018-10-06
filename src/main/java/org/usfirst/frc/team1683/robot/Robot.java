@@ -12,14 +12,18 @@ import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 import org.usfirst.frc.team1683.robot.subsystems.TankDrive;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1683.robot.motor.TalonSRX;
 import org.usfirst.frc.team1683.robot.sensors.*;
+import org.usfirst.frc.team1683.robot.automation.Priority;
+import org.usfirst.frc.team1683.robot.automation.Target;
 import org.usfirst.frc.team1683.robot.commands.*;
 
 /**
@@ -34,6 +38,7 @@ public class Robot extends TimedRobot {
 	public static final boolean RIGHT_REVERSE = true;
 	
 	public static Gyro gyro;
+	public static DigitalInput limitSwitchBottom;
 	
 	public static TalonSRX grabberLeft, grabberRight, elevatorTalon,
 		leftETalonSRX, rightETalonSRX, grabberTilt;
@@ -41,6 +46,8 @@ public class Robot extends TimedRobot {
 	public static DriveTrain drive;
 	public static Grabber grabber;
 	public static Elevator elevator;
+
+	private SendableChooser<Object> autoChooser;
 	
 	private static final double INCHES_PER_PULSE = 0.00475; // configure
 	
@@ -51,6 +58,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		gyro = new AnalogGyro(HWR.GYRO);
+		limitSwitchBottom = new DigitalInput(HWR.LIMIT_SWITCH_BOTTOM);
 		
 		grabberLeft = new TalonSRX(HWR.GRABBER_LEFT, false);
 		grabberRight = new TalonSRX(HWR.GRABBER_RIGHT, false);
@@ -84,6 +92,16 @@ public class Robot extends TimedRobot {
 		elevator = new Elevator(elevatorTalon);
 
 		SmartDashboard.putData((AnalogGyro) gyro);
+
+		Target[] priorities = new Target[] { Target.SAME_SWITCH, Target.OPP_SWITCH };
+		autoChooser = new SendableChooser<Object>();
+
+		autoChooser.addDefault("Go forward", new Forward(100, 0.4, 0));
+		autoChooser.addObject("Start right", new Priority(priorities, 'R'));
+		autoChooser.addObject("Switch from left", new Priority(priorities, 'L'));
+		autoChooser.addObject("Switch from middle", new Priority(priorities, 'M') );
+
+		SmartDashboard.putData(autoChooser);
 	}
 
 	/**
@@ -100,9 +118,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		Command alpha = new CommandGroupAlpha();
-		SmartDashboard.putData(alpha);
-		alpha.start();
+		Object o = autoChooser.getSelected();
+		if (o instanceof Forward) {
+			Command c = (Command) o;
+			c.start();
+		}
+		else if (o instanceof Priority) {
+			Priority p = (Priority) o;
+			p.getTodo().start();
+		}
+
 	}
 
 	/**
@@ -136,6 +161,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 		SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoder().getDistance());
 		SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoder().getDistance());
+		SmartDashboard.putBoolean("Limit Switch", limitSwitchBottom.get());
 	}
 
 	/**

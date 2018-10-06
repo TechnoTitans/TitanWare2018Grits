@@ -16,8 +16,8 @@ public class TeleopDriveTrain extends Command {
 
 	private Filter rightFilter, leftFilter, elevatorFilter;
 	public void initialize() {
-		rightFilter = new Filter(0.01);
-		leftFilter = new Filter(0.01);
+		rightFilter = new Filter(0.12);
+		leftFilter = new Filter(0.1);
 		elevatorFilter = new Filter(0.1);
 	}
 
@@ -33,11 +33,11 @@ public class TeleopDriveTrain extends Command {
 		   button2 = new JoystickButton(leftJoystick,2),
 		   button3 = new JoystickButton(rightJoystick, 3),
 	       button4 = new JoystickButton(auxJoystick, 4),
-	       button5 = new JoystickButton(auxJoystick, 5),
+	       auxBtn6 = new JoystickButton(auxJoystick, 6),
 	       button6 = new JoystickButton(leftJoystick,6);
 	public TeleopDriveTrain() {
 		button4.whenPressed(new Grab());
-		button5.whenPressed(new Release());
+		auxBtn6.whenPressed(new Release());
 	}
 
 	@Override
