@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Grabber extends Subsystem{
    private TalonSRX left;
    private TalonSRX right;
-
+   private TalonSRX tilt;
+   
    public Grabber(TalonSRX left, TalonSRX right, TalonSRX tilt) {
 		this.left = left;
 		this.right = right;
-		
+		this.tilt = tilt;
 	}
 
    public void moveIn(double speed) {
@@ -27,6 +28,9 @@ public class Grabber extends Subsystem{
 	   right.set(-speed);
    }
    
+   public void tilt(double speed) {
+	   this.tilt.set(speed);
+   }
    
   @Override
 	protected void initDefaultCommand() {

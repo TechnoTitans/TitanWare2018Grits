@@ -12,6 +12,7 @@ import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 import org.usfirst.frc.team1683.robot.subsystems.TankDrive;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -38,7 +39,7 @@ public class Robot extends TimedRobot {
 	public static final boolean RIGHT_REVERSE = true;
 	
 	public static Gyro gyro;
-	public static DigitalInput limitSwitchBottom;
+	public static DigitalInput limitSwitchBottom, limitSwitchTop;
 	
 	public static TalonSRX grabberLeft, grabberRight, elevatorTalon,
 		leftETalonSRX, rightETalonSRX, grabberTilt;
@@ -61,6 +62,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		gyro = new AnalogGyro(HWR.GYRO);
 		limitSwitchBottom = new DigitalInput(HWR.LIMIT_SWITCH_BOTTOM);
+		limitSwitchTop = new DigitalInput(HWR.LIMIT_SWITCH_TOP);
 		
 		grabberLeft = new TalonSRX(HWR.GRABBER_LEFT, false);
 		grabberRight = new TalonSRX(HWR.GRABBER_RIGHT, false);
@@ -121,6 +123,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
+		CameraServer.getInstance().startAutomaticCapture();
 		new Switch(false).start();
 		Object o = autoChooser.getSelected();
 		if (o instanceof Command) {
@@ -139,7 +143,6 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		
-
 		SmartDashboard.putNumber("Right sent", Robot.drive.getRight().getPercentSpeed());
 		SmartDashboard.putNumber("Left sent", Robot.drive.getLeft().getPercentSpeed());
 		// debug
@@ -150,6 +153,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		CameraServer.getInstance().startAutomaticCapture();
+
 		new TeleopDriveTrain().start();
 	}
 
@@ -159,6 +164,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		
+		
+		SmartDashboard.putBoolean("top ls", limitSwitchTop.get());
+		SmartDashboard.putBoolean("bot ls", limitSwitchBottom.get());
 		
 
 		SmartDashboard.putNumber("Right sent", Robot.drive.getRight().getPercentSpeed());

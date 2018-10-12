@@ -6,9 +6,9 @@ import org.usfirst.frc.team1683.robot.subsystems.Grabber;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
-public class Grab extends TimedCommand {
+public class Grab extends Command {
 	public Grab() {
-		super(1);
+//		super(1);
 		requires(Robot.grabber);
 	}
 
@@ -23,7 +23,7 @@ public class Grab extends TimedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return isTimedOut();
+		return false;
 	}
 	
 }
