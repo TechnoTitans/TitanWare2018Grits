@@ -16,10 +16,10 @@ public class OppositeSwitch extends CommandGroup {
   public OppositeSwitch(boolean right) {
     addSequential(new OutInShake());
     int side = right ? 1 : -1;
-    addSequential(new Forward(200, 0.5));
+    addSequential(new Forward(200, 0.5, false));
     
     addSequential(new Turn(-90 * side, 0.4));
-    addSequential(new Forward(170, 0.5));
+    addSequential(new Forward(153, 0.5));
     addParallel(new LiftUp(true));
     addSequential(new Turn(-90 * side, 0.4));
     addSequential(new Release());

@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
 
 	private Command autoCommand;
 
-	private SendableChooser<Object> autoChooser;
+	private SendableChooser<Priority> autoChooser;
 	
 	private static final double INCHES_PER_PULSE = 0.00475; // configure
 	
@@ -98,14 +98,16 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData((AnalogGyro) gyro);
 
 		Target[] priorities = new Target[] { Target.SAME_SWITCH, Target.SAME_SCALE, Target.OPP_SWITCH };
-		autoChooser = new SendableChooser<Object>();
+		autoChooser = new SendableChooser<>();
 
-		autoChooser.addDefault("Go forward", new Forward(100, 0.4, 0));
+		autoChooser.addDefault("Go forward", null);
 		autoChooser.addObject("Start right", new Priority(priorities, 'R'));
 		autoChooser.addObject("Switch from left", new Priority(priorities, 'L'));
 		autoChooser.addObject("Switch from middle", new Priority(priorities, 'M') );
 
-		SmartDashboard.putData(autoChooser);
+		SmartDashboard.putData("Autonomous chooser", autoChooser);
+
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
@@ -116,6 +118,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		if (autoCommand != null && !autoCommand.isCanceled()) autoCommand.cancel();
+		Scheduler.getInstance().removeAll();
 	}
 
 	/**
@@ -125,12 +128,11 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		
 		CameraServer.getInstance().startAutomaticCapture();
-		new Switch(false).start();
-		Object o = autoChooser.getSelected();
-		if (o instanceof Command) {
-			autoCommand = (Command) o;
+		Priority o = autoChooser.getSelected();
+		if (o == null) {
+			autoCommand = new Forward(120, 0.4);
 		} else {
-			autoCommand = ((Priority) o).getTodo();
+			autoCommand = o.getTodo();
 		}
 		autoCommand.start();
 

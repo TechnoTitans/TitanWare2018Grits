@@ -79,9 +79,11 @@ public class Priority {
         if (priority == Target.SAME_SWITCH){
             todo = new Switch(start_side == 'R');
         } else if (priority == Target.SAME_SCALE) {
-            todo = new Scale(start_side == 'R');
+            // todo = new Scale(start_side == 'R');
+            todo = new Forward(120, 0.4);
         } else if (priority == Target.OPP_SWITCH){
-            todo = new OppositeSwitch(start_side == 'R');
+            // todo = new OppositeSwitch(start_side == 'R');
+            todo = new Forward(120, 0.4);
         } else if (priority == Target.OPP_SCALE){
             todo = new Forward(120, 0.5);
         } else if (priority == Target.RIGHT_SWITCH){

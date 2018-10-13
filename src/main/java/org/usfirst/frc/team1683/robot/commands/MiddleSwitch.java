@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MiddleSwitch extends CommandGroup {
   public MiddleSwitch(boolean goRight) {
     addSequential(new OutInShake());
-    addSequential(new Forward(40, 0.5));
+    addSequential(new Forward(25, 0.5, false));
     addSequential(new Turn(45 * (goRight ? 1 : -1), 0.6));
     addParallel(new LiftUp(true));
-    addSequential(new Forward(66, 0.5));
+    addSequential(new Forward(76, 0.5));
     addSequential(new Turn(-45 * (goRight ? 1 : -1), 0.6));
-    addSequential(new Forward(68, 0.3));
+    addSequential(new Forward(45.5, 0.3));
     addSequential(new Release());
   }
 }

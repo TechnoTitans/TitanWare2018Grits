@@ -22,6 +22,7 @@ public class TeleopDriveTrain extends Command {
 	       auxBtn6,
 		   auxBtn3,
 		   auxBtn5,
+		   auxBtn11,
 	       button6;
 
 	private Filter rightFilter, leftFilter, elevatorFilter;
@@ -34,7 +35,6 @@ public class TeleopDriveTrain extends Command {
 		auxBtn6.whileHeld(new Release());
 		auxBtn5.whenPressed(new LiftUp(true));
 		auxBtn3.whenPressed(new Shake());
-		
 	
 	}
 
@@ -46,6 +46,10 @@ public class TeleopDriveTrain extends Command {
 		
 		Robot.drive.set(leftFilter.getValue(), rightFilter.getValue());
 		Robot.elevator.moveUp(elevatorFilter.getValue());
+		
+		if (auxJoystick.getRawButtonPressed(11)) {
+			Robot.elevator.toggleLimitSwitchOverride();
+		}
 		SmartDashboard.putNumber("pov", auxJoystick.getPOV());
 	}
 

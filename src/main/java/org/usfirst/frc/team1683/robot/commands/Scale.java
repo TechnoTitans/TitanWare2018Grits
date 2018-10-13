@@ -13,7 +13,7 @@ public class Scale extends CommandGroup {
   public Scale(boolean right) {
     addSequential(new OutInShake());
     int side = right ? 1 : -1;
-    addSequential(new Forward(315.7, 0.6));
+    addSequential(new Forward(315.7, 0.6, false));
     addSequential(new Turn(-90 * side, 0.4));
     addSequential(new LiftUp(false));
     addSequential(new Forward(21, 0.3));

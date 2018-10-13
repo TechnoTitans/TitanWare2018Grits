@@ -25,22 +25,28 @@ public class Forward extends Command {
     private double encDiff;
     private double lastEnc;
 
-    public Forward(double forwardNum, double speed, double acceleration) {
+    private boolean resetGyro;
+
+    public Forward(double forwardNum, double speed, double acceleration, boolean resetGyro) {
         requires(Robot.drive);
         this.distance = forwardNum;
         this.desiredSpeed = speed;
         this.speedPerDistance = acceleration;
+        this.resetGyro = resetGyro;
         minTime = new Timer();
     }
 
     public Forward(double forwardNum, double speed) {
-        this(forwardNum, speed, 0);
+        this(forwardNum, speed, 0, true);
         this.setInterruptible(true);
 	}
 
+    public Forward(double forwardNum, double speed, boolean resetGyro) {
+        this(forwardNum, speed, 0, resetGyro);
+    }
 	@Override
     protected void initialize() {
-        Robot.gyro.reset();
+        if (resetGyro) Robot.gyro.reset();
         Robot.drive.resetEncoders();
         SmartDashboard.putNumber("Started forward", distance);
         SmartDashboard.putBoolean("Is finished?", isFinished());

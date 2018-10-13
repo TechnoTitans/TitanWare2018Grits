@@ -9,7 +9,7 @@ import org.usfirst.frc.team1683.robot.Robot;
 
 public class Turn extends Command {
   private final double increasePerDegree = .005;
-  private final double minSpeed = .35;
+  private final double minSpeed = .5;
   private double turnSpeed;
   private double turnAngle;
 
@@ -34,13 +34,17 @@ public class Turn extends Command {
     double gyro = Math.abs(Robot.gyro.getAngle());
     SmartDashboard.putNumber("Turn gyro (abs)", gyro);
     SmartDashboard.putNumber("Target angle", getTargetAngle());
-    if (gyro < Math.abs(getTargetAngle()/2)) {
-      speed = minSpeed + increasePerDegree * gyro;
+    if (turnSpeed > minSpeed) {
+      if (gyro < Math.abs(getTargetAngle()/2)) {
+        speed = minSpeed + increasePerDegree * gyro;
+      } else {
+        speed = minSpeed + increasePerDegree * (Math.abs(getTargetAngle()) - gyro);
+      }
+      if (speed > turnSpeed) {
+        speed = turnSpeed;
+      }
     } else {
-      speed = minSpeed + increasePerDegree * (Math.abs(getTargetAngle()) - gyro);
-    }
-    if (speed > turnSpeed) {
-      speed = turnSpeed;
+      speed = minSpeed; //if the min speed happens to be faster than the maxSpeed/turnSpeed provided value, fallback to minSpeed
     }
     // speed = turnSpeed;
     Robot.drive.turnInPlace(turnAngle > 0, speed);
