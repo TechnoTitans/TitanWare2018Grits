@@ -13,10 +13,12 @@ public Elevator(TalonSRX elevatorTalon) {
 }
 	public void moveUp(double speed) {
 		// if the speed is more than 0, and the top limit switch is not pressed
-		if(speed > 0.0 && !Robot.limitSwitchTop.get()) {
+		if(speed > 0.01 && !Robot.limitSwitchTop.get()) {
 			elevatorTalon.set(speed);
-		} else if (speed < 0.0 && !Robot.limitSwitchBottom.get()) {
+		} else if (speed < -0.01 && !Robot.limitSwitchBottom.get()) {
 			elevatorTalon.set(speed);
+		} else {
+			elevatorTalon.set(0);
 		}
 		
 	}

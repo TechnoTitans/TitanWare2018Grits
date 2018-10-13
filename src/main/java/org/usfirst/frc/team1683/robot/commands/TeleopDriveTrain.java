@@ -20,7 +20,8 @@ public class TeleopDriveTrain extends Command {
 		   button3,
 	       button4,
 	       auxBtn6,
-	       auxBtn3,
+		   auxBtn3,
+		   auxBtn5,
 	       button6;
 
 	private Filter rightFilter, leftFilter, elevatorFilter;
@@ -31,7 +32,9 @@ public class TeleopDriveTrain extends Command {
 
 		button4.whileHeld(new Grab()); // when button is released, should cancel command
 		auxBtn6.whileHeld(new Release());
+		auxBtn5.whenPressed(new LiftUp(true));
 		auxBtn3.whenPressed(new Shake());
+		
 	
 	}
 
@@ -55,6 +58,7 @@ public class TeleopDriveTrain extends Command {
 		button4 = new JoystickButton(auxJoystick, 4);
 		auxBtn6 = new JoystickButton(auxJoystick, 6);
 		auxBtn3 = new JoystickButton(auxJoystick, 3);
+		auxBtn5 = new JoystickButton(auxJoystick, 5);
 		button6 = new JoystickButton(leftJoystick,6);
 //		button4.whenPressed(new Grab());
 	}

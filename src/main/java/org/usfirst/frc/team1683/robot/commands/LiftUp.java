@@ -4,6 +4,7 @@ import org.usfirst.frc.team1683.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.TimedCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LiftUp extends Command {
 	private boolean isSwitch;
@@ -27,6 +28,8 @@ public class LiftUp extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return isSwitch ? timeSinceInitialized() > 1.7 : Robot.limitSwitchTop.get();
+		SmartDashboard.putNumber("Time", timeSinceInitialized());
+		if (Robot.limitSwitchTop.get()) return true;
+		return isSwitch && timeSinceInitialized() > 1.7;
 	}
 }

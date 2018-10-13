@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData((AnalogGyro) gyro);
 
-		Target[] priorities = new Target[] { Target.SAME_SWITCH, Target.OPP_SWITCH };
+		Target[] priorities = new Target[] { Target.SAME_SWITCH, Target.SAME_SCALE, Target.OPP_SWITCH };
 		autoChooser = new SendableChooser<Object>();
 
 		autoChooser.addDefault("Go forward", new Forward(100, 0.4, 0));

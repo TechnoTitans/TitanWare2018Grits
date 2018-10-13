@@ -42,6 +42,7 @@ public class Turn extends Command {
     if (speed > turnSpeed) {
       speed = turnSpeed;
     }
+    // speed = turnSpeed;
     Robot.drive.turnInPlace(turnAngle > 0, speed);
     SmartDashboard.putNumber("Turn speed", speed);
   }
