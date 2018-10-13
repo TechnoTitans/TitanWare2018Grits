@@ -5,9 +5,11 @@ import org.usfirst.frc.team1683.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
-public class LiftUp extends TimedCommand {
+public class LiftUp extends Command {
+	private boolean isSwitch;
 	public LiftUp(boolean isSwitch) {
-		super(1.7);
+		// super(1.7);
+		this.isSwitch = isSwitch;
 		requires(Robot.elevator);
 	}
 
@@ -25,6 +27,6 @@ public class LiftUp extends TimedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return isTimedOut();
+		return isSwitch ? timeSinceInitialized() > 1.7 : Robot.limitSwitchTop.get();
 	}
 }

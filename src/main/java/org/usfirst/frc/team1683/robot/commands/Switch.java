@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Switch extends CommandGroup {
     public Switch(boolean right) {
+        addSequential(new OutInShake());
         int side = right ? 1 : -1;
         addSequential(new Forward(120, 0.5));
         addSequential(new Turn(-90 * side, 0.4));

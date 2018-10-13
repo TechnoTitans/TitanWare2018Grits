@@ -14,12 +14,24 @@ public class TeleopDriveTrain extends Command {
 	private Joystick leftJoystick = new Joystick(HWR.LEFT_JOYSTICK);
 	private Joystick rightJoystick = new Joystick(HWR.RIGHT_JOYSTICK);
 	private Joystick auxJoystick = new Joystick(HWR.AUX_JOYSTICK);
+	
+	Button button1,
+		   button2,
+		   button3,
+	       button4,
+	       auxBtn6,
+	       auxBtn3,
+	       button6;
 
 	private Filter rightFilter, leftFilter, elevatorFilter;
 	public void initialize() {
 		rightFilter = new Filter(0.12);
 		leftFilter = new Filter(0.1);
 		elevatorFilter = new Filter(0.1);
+
+		button4.whileHeld(new Grab()); // when button is released, should cancel command
+		auxBtn6.whileHeld(new Release());
+		auxBtn3.whenPressed(new Shake());
 	
 	}
 
@@ -34,20 +46,17 @@ public class TeleopDriveTrain extends Command {
 		SmartDashboard.putNumber("pov", auxJoystick.getPOV());
 	}
 
-	Button button1 = new JoystickButton(leftJoystick,1),
-		   button2 = new JoystickButton(leftJoystick,2),
-		   button3 = new JoystickButton(rightJoystick, 3),
-	       button4 = new JoystickButton(auxJoystick, 4),
-	       auxBtn6 = new JoystickButton(auxJoystick, 6),
-	       auxBtn3 = new JoystickButton(auxJoystick, 3),
-	       button6 = new JoystickButton(leftJoystick,6);
 	
 	
 	public TeleopDriveTrain() {
+		button1 = new JoystickButton(leftJoystick,1);
+		button2 = new JoystickButton(leftJoystick,2);
+		button3 = new JoystickButton(rightJoystick, 3);
+		button4 = new JoystickButton(auxJoystick, 4);
+		auxBtn6 = new JoystickButton(auxJoystick, 6);
+		auxBtn3 = new JoystickButton(auxJoystick, 3);
+		button6 = new JoystickButton(leftJoystick,6);
 //		button4.whenPressed(new Grab());
-		button4.whileHeld(new Grab()); // when button is released, should cancel command
-		auxBtn6.whileHeld(new Release());
-		auxBtn3.whenPressed(new Shake());
 	}
 
 	@Override

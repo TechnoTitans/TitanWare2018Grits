@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.opencv.core.Scalar;
 import org.usfirst.frc.team1683.robot.commands.Forward;
 import org.usfirst.frc.team1683.robot.commands.MiddleSwitch;
 import org.usfirst.frc.team1683.robot.commands.OppositeSwitch;
+import org.usfirst.frc.team1683.robot.commands.Scale;
 import org.usfirst.frc.team1683.robot.commands.Switch;
 
 public class Priority {
@@ -77,7 +79,7 @@ public class Priority {
         if (priority == Target.SAME_SWITCH){
             todo = new Switch(start_side == 'R');
         } else if (priority == Target.SAME_SCALE) {
-            todo = new Forward(120, 0.5);
+            todo = new Scale(start_side == 'R');
         } else if (priority == Target.OPP_SWITCH){
             todo = new OppositeSwitch(start_side == 'R');
         } else if (priority == Target.OPP_SCALE){
